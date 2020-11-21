@@ -1,6 +1,55 @@
-from mainClasses import Route
+from mainClasses import *
 from copy import deepcopy
-import random
+from constants import urls
+import requests
+import random as rnd
+
+
+def separator(longStr, start, end):
+    i = longStr.find(start) + len(start)
+    j = longStr.find(end)
+    # print(longStr[i:j])
+    return longStr[i:j].replace('\t', ' ')
+
+
+def uselocalData(localpath):
+    with open(localpath) as file:
+        strFile = file.read()
+
+    node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
+    demand_strings = separator(strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
+    capacity_string = separator(strFile, "CAPACITY :", "NODE_COORD_SECTION")
+    capacity = int(capacity_string.strip())
+    # print(demand_strings)
+
+    n_clients = len(demand_strings)
+    nodes = []
+    for i in range(0, n_clients):
+        x, y = node_strings[i].strip().split(" ")[1:]   
+        demand  = demand_strings[i].strip().split(" ")[-1]
+
+        nodes.append(Node(i, demand, x, y))
+
+    return capacity, nodes
+
+def downloadData():
+    resp = requests.get(urls[0], stream=True)
+    strFile = resp.text
+
+    node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
+    demand_strings = separator(strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
+    capacity_string = separator(strFile, "CAPACITY :", "NODE_COORD_SECTION")
+    capacity = int(capacity_string.strip())
+
+    n_clients = len(demand_strings)
+    nodes = []
+    for i in range(n_clients):
+        x, y = node_strings[i].strip().split(" ")[1:]
+        demand = demand_strings[i].strip().split(" ")[-1]
+
+        nodes.append(Node(i, demand, x, y))
+
+    return capacity, nodes
 
 
 def greedy_sol(nodes, capacity):
@@ -62,12 +111,12 @@ def greedy_sol(nodes, capacity):
 
     # return routes
     # format output
-    return formatter_annealing(routes)
+    return formatter(routes)
 
 
 '''
 Format 1
-input list of Routes, start formatter_annealing  Ruta | Costo: 158, Camino: [0, 21, 16, 18, 25, 5, 4, 29, 8, 11, 0],
+input list of Routes, start formatter  Ruta | Costo: 158, Camino: [0, 21, 16, 18, 25, 5, 4, 29, 8, 11, 0],
   Ruta | Costo: 115, Camino: [0, 28, 26, 12, 23, 7, 6, 0],
   Ruta | Costo: 240, Camino: [0, 22, 9, 13, 17, 30, 3, 2, 0],
   Ruta | Costo: 244, Camino: [0, 24, 19, 1, 15, 14, 10, 20, 0],
@@ -86,7 +135,7 @@ output, list of Routes without 0s:
 '''
 
 
-def formatter_annealing(solution):
+def formatter(solution):
     solution_as_list = [0]
     for route in solution:
         solution_as_list += route.path[1:]

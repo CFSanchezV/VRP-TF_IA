@@ -1,6 +1,5 @@
-import random as rnd
-from constants import *
-from initialSolution import greedy_sol
+from constants import T_FACTOR, INITIAL_TEMP, FINAL_TEMP
+from initialSolution import greedy_sol, rnd
 from math import exp
 from copy import deepcopy
 
