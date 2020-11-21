@@ -1,25 +1,36 @@
 # TF - Inteligencia Artificial - Problema de enrutamiento de vehiculos (VRP) #
 
-## Pequeño Vistazo
-![](./res/GUI_demo.png)
-
 ## Problema de enrutamiento de vehiculos (VRP) 📋
 ![](./res/VehicleRoute.png)
 
 
-### Algoritmos 🔧
+### Algoritmos
 1. Algoritmo Voraz para generar solución inicial
 2. Simulated Annealing (SA) ó Recocido Simulado
 3. Algoritmos de Transformación (Intercambio, Reubicación, Inversión) para recorrer el espacio de búsqueda
 ![](./res/generacionVecinos.PNG)
 
 
-## Instalación y uso 🚀
+### Pre-requisitos 🛠️
+
+_Este proyecto utiliza propiedades de estas librerías._ 
+
+* [Requests](https://pandas.pydata.org/docs/) - Documentación de Requests
+* [Matplotlib](https://numpy.org/doc/) - Documentación de Matplotlib
+
+
+## Instalación y uso 🛠🔧
 _Estas instrucciones permitirán obtener una copia del proyecto en funcionamiento en una máquina local._
 
-Debe de asegurarse de tener `Python` instalado en su ordenado desde la versión 3.0 para adelante y el instalador de paquetes `pip` o `conda` también en su versión más actualizada.
+Debe de asegurarse de tener `Python` instalado en su ordenado desde la versión 3.0 para adelante y el instalador de paquetes `pip` o `conda`.
 
-### Uso 🛠️
+_Instalación de librerías en Windows 10_
+
+```bash
+pip install requests
+pip install matplotlib
+```
+
 _Clonación del repositorio y ejecución de la aplicación_
 
 ```bash
