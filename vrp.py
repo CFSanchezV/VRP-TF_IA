@@ -1,6 +1,7 @@
-from time import process_time
+from time import process_time, sleep
 from constants import show_constants
 from initialSolution import downloadData, uselocalData, optimals
+import graph as gf
 import simulatedAnnealing as SA
 
 
@@ -16,10 +17,8 @@ def main():
     # capacity, nodes, optimal_idx = uselocalData("data/E-n101-k14.vrp")
     capacity, nodes, optimal_idx = downloadData()
     optimal_value = optimals[optimal_idx]
-        
-    print("Nodos:")
-    for node in nodes:
-        print(node)
+    # Clientes y capacidad de camiones
+    print_nodes(nodes)
     print("Capacidad: ", capacity)
 
     initial_solution = SA.greedy_sol(nodes, capacity)
@@ -28,6 +27,13 @@ def main():
     print(costo_inicial)
     
     print(optimal_value)
+        
+    gf.live_plot(nodes, initial_solution)
+    
+    # end isinteractive
+    if gf.plt.isinteractive():
+        gf.plt.ioff()
+        
     
 
 if __name__ == "__main__":

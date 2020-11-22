@@ -1,8 +1,15 @@
 import matplotlib.pyplot as plt
-from initialSolution import formatter, downloadData
-from datetime import datetime
-import simulatedAnnealing as SA
+# from initialSolution import downloadData
+# import simulatedAnnealing as SA
 
+
+def live_plot(nodes, solution):
+    if not plt.isinteractive():
+        plt.ion()
+        plt.show()
+    plt.clf()
+    plot_solution(nodes, solution)
+    plt.pause(1)  # pause 1sec    
 
 
 def draw_line(x1, y1, x2, y2, color):
@@ -13,7 +20,8 @@ def draw_line(x1, y1, x2, y2, color):
     plt.plot(x_values, y_values, linewidth=2, color=color)
 
 
-def draw_scatter(nodes):
+# plot nodes & depot
+def plot_scatter(nodes):
     depot = nodes[0]
     clients = nodes[1:]
 
@@ -42,7 +50,7 @@ def plot_solution(nodes, solution):
     for cli in clients:
         x_lst.append(cli.x)
         y_lst.append(cli.y)
-    plt.scatter(x_list, y_list, s=50, color='g')
+    plt.scatter(x_lst, y_lst, s=50, color='g')
 
     plt.title("Mejor solucion", fontsize=20)
 
@@ -65,14 +73,14 @@ def plot_solution(nodes, solution):
 
 # tests drawing
 if __name__ == "__main__":
+    pass
     # unit
-    draw_line(1, 2, 3, 4, 'b')
-    plt.show()
-    
+    # draw_line(1, 2, 3, 4, 'b')
+    # plt.show()
+
     # integral
-    capacity, nodes, optimal_idx = downloadData()
+    # capacity, nodes, optimal_idx = downloadData()
     # optimal_value = optimals[optimal_idx]
-    initial_solution = SA.greedy_sol(nodes, capacity)
-    solution = formatter(initial_solution)
-    plot_solution(nodes, solution)
-    plt.show()
+    # initial_solution = SA.greedy_sol(nodes, capacity)
+    # plot_solution(nodes, initial_solution)
+    # plt.show()

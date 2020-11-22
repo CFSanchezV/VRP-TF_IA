@@ -151,7 +151,9 @@ output, list of Routes without 0s:
 def formatter(solution):
     solution_as_list = [0]
     for route in solution:
+        print(route)
         solution_as_list += route.path[1:]
+    print("formatted solution: ", solution_as_list)
     return solution_as_list
 
 
