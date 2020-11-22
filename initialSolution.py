@@ -3,6 +3,7 @@ from copy import deepcopy
 from constants import urls
 import requests
 import random as rnd
+import os
 
 
 def separator(longStr, start, end):
@@ -16,8 +17,22 @@ def uselocalData(localpath):
     with open(localpath, 'r') as file:
         strFile = file.read()
 
-    node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
-    demand_strings = separator(strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
+    name = os.path.basename(file.name)
+    fLetter = name[0]
+    idx = 0
+    if fLetter == 'A':
+        idx = 0
+    elif fLetter == 'B':
+        idx = 1
+    elif fLetter == 'E':
+        idx = 2
+    elif fLetter == 'X':
+        idx = 3
+
+    node_strings = separator(
+        strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
+    demand_strings = separator(
+        strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
     capacity_string = separator(strFile, "CAPACITY :", "NODE_COORD_SECTION")
     capacity = int(capacity_string.strip())
     # print(demand_strings)
@@ -25,19 +40,24 @@ def uselocalData(localpath):
     n_clients = len(demand_strings)
     nodes = []
     for i in range(n_clients):
-        x, y = node_strings[i].strip().split(" ")[1:]   
-        demand  = demand_strings[i].strip().split(" ")[-1]
+        x, y = node_strings[i].strip().split(" ")[1:]
+        demand = demand_strings[i].strip().split(" ")[-1]
 
         nodes.append(Node(i, demand, x, y))
 
-    return capacity, nodes
+    return capacity, nodes, idx
+
 
 def downloadData():
-    resp = requests.get(rnd.choice(urls), stream=True)
+    anyURL = rnd.choice(urls)
+    resp = requests.get(anyURL, stream=True)
     strFile = resp.text
+    idx = urls.index(anyURL)
 
-    node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
-    demand_strings = separator(strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
+    node_strings = separator(
+        strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
+    demand_strings = separator(
+        strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
     capacity_string = separator(strFile, "CAPACITY :", "NODE_COORD_SECTION")
     capacity = int(capacity_string.strip())
 
@@ -49,7 +69,7 @@ def downloadData():
 
         nodes.append(Node(i, demand, x, y))
 
-    return capacity, nodes
+    return capacity, nodes, idx
 
 
 def greedy_sol(nodes, capacity):

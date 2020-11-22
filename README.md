@@ -15,8 +15,8 @@
 
 _Este proyecto utiliza propiedades de estas librerías._ 
 
-* [Requests](https://pandas.pydata.org/docs/) - Documentación de Requests
-* [Matplotlib](https://numpy.org/doc/) - Documentación de Matplotlib
+* [Requests](https://requests.readthedocs.io/en/master/) - Documentación de Requests
+* [Matplotlib](https://matplotlib.org/3.3.3/contents.html) - Documentación de Matplotlib
 
 
 ## Instalación y uso 🛠🔧

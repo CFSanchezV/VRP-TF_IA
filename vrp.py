@@ -1,5 +1,5 @@
 from time import process_time
-from constants import show_constants
+from constants import show_constants, optimals
 from initialSolution import downloadData, uselocalData
 import simulatedAnnealing as SA
 
@@ -13,9 +13,10 @@ def print_nodes(nodes):
 def main():
     show_constants()
     # solucion inicial
-    # capacity, nodes = uselocalData("data/A-n32-k5.vrp")
-    capacity, nodes = downloadData()
-
+    # capacity, nodes, optimal_idx = uselocalData("data/E-n101-k14.vrp")
+    capacity, nodes, optimal_idx = downloadData()
+    optimal_value = optimals[optimal_idx]
+        
     print("Nodos:")
     for node in nodes:
         print(node)
@@ -25,11 +26,9 @@ def main():
     costo_inicial = SA.costo_solucion(initial_solution, nodes)
     print("Costo solucion inicial:")
     print(costo_inicial)
-
-
-def find_optimal_from_data():
-    pass
-
+    
+    print(optimal_value)
+    
 
 if __name__ == "__main__":
     main()
