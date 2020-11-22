@@ -13,7 +13,7 @@ def separator(longStr, start, end):
 
 
 def uselocalData(localpath):
-    with open(localpath) as file:
+    with open(localpath, 'r') as file:
         strFile = file.read()
 
     node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
@@ -24,7 +24,7 @@ def uselocalData(localpath):
 
     n_clients = len(demand_strings)
     nodes = []
-    for i in range(0, n_clients):
+    for i in range(n_clients):
         x, y = node_strings[i].strip().split(" ")[1:]   
         demand  = demand_strings[i].strip().split(" ")[-1]
 
@@ -33,7 +33,7 @@ def uselocalData(localpath):
     return capacity, nodes
 
 def downloadData():
-    resp = requests.get(urls[0], stream=True)
+    resp = requests.get(rnd.choice(urls), stream=True)
     strFile = resp.text
 
     node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
