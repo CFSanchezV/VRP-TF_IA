@@ -1,6 +1,6 @@
 from mainClasses import *
 from copy import deepcopy
-from constants import urls
+from constants import urls, optimals_dict, optimals
 import requests
 import random as rnd
 import os
@@ -18,16 +18,9 @@ def uselocalData(localpath):
         strFile = file.read()
 
     name = os.path.basename(file.name)
-    fLetter = name[0]
-    idx = 0
-    if fLetter == 'A':
-        idx = 0
-    elif fLetter == 'B':
-        idx = 1
-    elif fLetter == 'E':
-        idx = 2
-    elif fLetter == 'X':
-        idx = 3
+    fLetter = name[0].lower()
+    val = optimals_dict[fLetter]
+    idx = optimals.index(val)
 
     node_strings = separator(
         strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]

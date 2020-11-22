@@ -1,6 +1,6 @@
 from time import process_time
-from constants import show_constants, optimals
-from initialSolution import downloadData, uselocalData
+from constants import show_constants
+from initialSolution import downloadData, uselocalData, optimals
 import simulatedAnnealing as SA
 
 
