@@ -22,13 +22,11 @@ def intercambiar(solution_input):
 # Mover a indice aleatorio
 def mover(solution_input):
     last_pos = len(solution_input) - 2
-
     i = rnd.randint(1, last_pos)
     j = rnd.randint(1, last_pos)
 
     # minimo: i, maximo: j
-    i = min(i, j)
-    j = max(i, j)
+    i, j = min(i, j), max(i, j)
 
     # Mover de indice i a indice j
     return solution_input[:i] + solution_input[i + 1:j] + [solution_input[i]] + solution_input[j:]
@@ -37,13 +35,11 @@ def mover(solution_input):
 # Invertir seccion
 def invertir(solution_input):
     last_pos = len(solution_input) - 2
-
     i = rnd.randint(1, last_pos)
     j = rnd.randint(1, last_pos)
 
     # minimo: i, maximo: j
-    i = min(i, j)
-    j = max(i, j)
+    i, j = min(i, j), max(i, j)
 
     # Invertir de indice i a indice j
     return solution_input[:i] + solution_input[i:j][::-1] + solution_input[j:]

@@ -94,7 +94,7 @@ def main():
         min_cost = min(min_cost, costo_final)
         print(f"\n ITERACION {i + 1} ")
 
-        print("Solution final:", final_solution)
+        print("Solucion final:", final_solution)
         print("Costo final:", costo_final)
         print(f"Costo {cost_diff_optimal:.2f} % MAYOR que el óptimo")
 
@@ -103,7 +103,7 @@ def main():
 
         gf.plt.clf()
         gf.plot_solution(nodes, best_solution)
-        gf.plt.pause(0.1)
+        gf.plt.pause(0.5)
 
     # gf.draw_solution(nodes, final_solution)
     # end isinteractive
