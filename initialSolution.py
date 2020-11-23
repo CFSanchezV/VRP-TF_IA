@@ -1,4 +1,4 @@
-from mainClasses import *
+from mainClasses import Node, Route
 from copy import deepcopy
 from constants import urls, optimals_dict, optimals
 import requests

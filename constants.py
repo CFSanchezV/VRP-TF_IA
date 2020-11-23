@@ -11,7 +11,7 @@ optimals = [784, 672, 1071, 27591]
 optimals_dict = {'a': 784, 'b': 672, 'e': 1071, 'x': 27591}
 
 # CONSTANTS
-INITIAL_TEMP = 100
+INITIAL_TEMP = 20
 FINAL_TEMP = 1
 T_FACTOR = 0.95
 
@@ -31,3 +31,9 @@ def show_constants():
 
 def percent_diff(a, b):
     return 100 * (a - b) / a
+
+
+def print_nodes(nodes):
+    print("Nodos (clientes):")
+    for node in nodes:
+        print(node)
