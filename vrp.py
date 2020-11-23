@@ -1,7 +1,7 @@
 from time import process_time
-from constants import show_constants, rutas_locales, percent_diff, print_nodes
+from constants import show_constants, rutas_locales, percent_diff, print_nodes, print_lista_rutas, set_xy_labels
 from initialSolution import downloadData, uselocalData, optimals
-import graph
+import graph as gf
 import simulatedAnnealing as SA
 
 
@@ -10,8 +10,9 @@ def validar_input(veces_a_aplicar, ruta_archivo):
         veces = int(veces_a_aplicar)
         ruta = str(ruta_archivo)
     except ValueError:
-        print("Ruta o número de iteraciones inválido")
+        print("Número de iteraciones inválido")
         exit()
+
     if ruta == "":
         print("Ruta vacía, descargando datos aleatorios de CVRPLIB")
     return veces, ruta
@@ -19,10 +20,11 @@ def validar_input(veces_a_aplicar, ruta_archivo):
 
 def main():
     print("\n---------------INICIALIZACIÓN---------------\n")
-    veces_a_aplicar = input("Ingresar # de iteraciones: ")
-    print("Lista de archivos:", rutas_locales)
-    ruta_archivo = input(
-        "Ingresar ruta de archivo | ejemplo= 'data/A-n32-k5.vrp': ")
+    veces_a_aplicar = input("Ingresar número de iteraciones: ")
+    print("\nLista de rutas: ", end='')
+    print_lista_rutas()
+
+    ruta_archivo = input("\nIngresar ruta de archivo: ")
     num_iteraciones, ruta = validar_input(veces_a_aplicar, ruta_archivo)
 
     show_constants()
@@ -40,7 +42,6 @@ def main():
     # Asignar funciones para aumentar velocidad
     funcion_recocido = SA.annealing
     funcion_costo = SA.costo_solucion
-    gf = graph    
 
     print("\n---------------SOLUCION INICIAL---------------\n")
 
@@ -48,14 +49,14 @@ def main():
     costo_inicial = funcion_costo(initial_solution, nodes)
     print("Solucion inicial:", initial_solution)
     print("Costo solucion inicial:", costo_inicial)
-    # live_plot(nodes, initial_solution)
-    # draw_solution(nodes, initial_solution)
 
-    gf.plt.ion()
-    gf.plt.show()
-    gf.plt.clf()
-    gf.plot_solution(nodes, initial_solution)
-    gf.plt.pause(1)
+    # gf.live_plot(nodes, initial_solution)
+
+    # subplots' axis + plotting
+    fig, (ax1, ax2) = gf.plt.subplots(nrows=1, ncols=2, figsize=(12, 5), tight_layout=True)
+    fig.canvas.set_window_title('Enrutamiento de vehiculos')
+    
+    gf.live_subplot(nodes, initial_solution, ax1, "Primera solución")
 
     print("\n---------------EJECUCION---------------\n")
 
@@ -101,17 +102,19 @@ def main():
         print(f"Costo {cost_diff_total:.2f} % MENOR que el inicial")
         print(f"Tiempo de ejecución: {time_diff:.3f} segundos")
 
-        gf.plt.clf()
-        gf.plot_solution(nodes, best_solution)
-        gf.plt.pause(0.5)
+        # gf.live_plot(nodes, best_solution)
 
-    # gf.draw_solution(nodes, final_solution)
+        # subplots' axis + plotting
+        gf.live_subplot(nodes, best_solution, ax2, "Solución actual")
+
     # end isinteractive
     if gf.plt.isinteractive():
         gf.plt.ioff()
+
+    gf.draw_solution(nodes, final_solution)
 
 
 if __name__ == "__main__":
     main()
     # TODO:
-    # evitar que se cierre el ultimo grafico o volver a dibujarlo por ultimo
+    # calcular estadisticas para tablas y comparaciones

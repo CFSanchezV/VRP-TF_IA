@@ -14,8 +14,13 @@ def separator(longStr, start, end):
 
 
 def uselocalData(localpath):
-    with open(localpath, 'r') as file:
-        strFile = file.read()
+    try:
+        with open(localpath, 'r') as file:
+            strFile = file.read()
+
+    except FileNotFoundError:
+        print(f"\nLa ruta '{localpath}' no es una ruta válida")
+        exit()
 
     name = os.path.basename(file.name)
     fLetter = name[0].lower()

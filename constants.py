@@ -28,7 +28,6 @@ def show_constants():
 
 
 # utils
-
 def percent_diff(a, b):
     return 100 * (a - b) / a
 
@@ -37,3 +36,16 @@ def print_nodes(nodes):
     print("Nodos (clientes):")
     for node in nodes:
         print(node)
+
+
+def set_xy_labels(ax1):
+    ax1.set_xlabel('x')
+    ax1.set_ylabel('y')
+
+
+def print_lista_rutas():
+    for i, ruta in enumerate(rutas_locales):
+        if i == len(rutas_locales)-1:
+            print("'data/" + ruta + "'", end=' o dejar en blanco para descargar datos')
+        else:
+            print("'data/" + ruta + "'", end=', ')
