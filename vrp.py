@@ -97,9 +97,9 @@ def main():
 
         print("Solucion final:", final_solution)
         print("Costo final:", costo_final)
-        print(f"Costo {cost_diff_optimal:.2f} % MAYOR que el óptimo")
+        print(f"Costo {cost_diff_optimal:.2f}% MAYOR que el óptimo")
 
-        print(f"Costo {cost_diff_total:.2f} % MENOR que el inicial")
+        print(f"Costo {cost_diff_total:.2f}% MENOR que el inicial")
         print(f"Tiempo de ejecución: {time_diff:.3f} segundos")
 
         # gf.live_plot(nodes, best_solution)
