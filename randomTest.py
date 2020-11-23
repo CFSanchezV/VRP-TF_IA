@@ -11,7 +11,7 @@ def print_solution(header, solution):
         print(solution)
 
 
-def percent(a, b):
+def percent_diff(a, b):
     return 100 * (a - b) / a
 
 

@@ -88,11 +88,11 @@ def costo_solucion(solution_input, nodes):
     return cost
 
 
-def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, initial_solution=None):
-    if initial_solution is None:
-        initial_solution = greedy_sol(nodes, capacity)
+def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, previous_solution=None):
+    if previous_solution is None:
+        previous_solution = greedy_sol(nodes, capacity)
 
-    mejor = sol_actual = initial_solution
+    mejor = sol_actual = previous_solution
     mejor_costo = costo_actual = costo_solucion(sol_actual, nodes)
 
     T = init_t
