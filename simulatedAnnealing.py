@@ -1,4 +1,4 @@
-from constants import T_FACTOR, INITIAL_TEMP, FINAL_TEMP
+from constants import T_FACTOR, INITIAL_T, FINAL_TEMP
 from initialSolution import greedy_sol, rnd
 from copy import deepcopy
 import math
@@ -84,7 +84,7 @@ def costo_solucion(solution_input, nodes):
     return cost
 
 
-def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, previous_solution=None):
+def annealing(nodes, capacity, init_t=INITIAL_T, t_factor=T_FACTOR, previous_solution=None):
     if previous_solution is None:
         previous_solution = greedy_sol(nodes, capacity)
 

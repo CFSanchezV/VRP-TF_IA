@@ -21,13 +21,13 @@ optimals = [784, 672, 1071, 27591, 742, 955, 569, 14971]
 optimals_dict = {'a': 784, 'b': 672, 'e': 1071, 'x': 27591, 'a3': 742, 'b3': 955, 'e3': 569, 'x3': 14971}
 
 # CONSTANTS, need Tweaking
-INITIAL_TEMP = 20
+INITIAL_T = 20
 T_FACTOR = 0.95
 FINAL_TEMP = 1
 
 
 def show_constants():
-    constdict = {"TEMPERATUA_INICIAL": INITIAL_TEMP, "TEMPERATUA_FINAL": FINAL_TEMP, "delta_T": T_FACTOR}
+    constdict = {"TEMPERATUA_INICIAL": INITIAL_T, "TEMPERATURA_FINAL": FINAL_TEMP, "delta_T": T_FACTOR}
     print("Parámetros iniciales del algoritmo Simulated Annealing:")
     for key, val in constdict.items():
         print(key + ":", val)
