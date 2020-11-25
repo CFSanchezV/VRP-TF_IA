@@ -20,11 +20,12 @@ def validar_input(veces_a_aplicar, ruta_archivo):
 
 def main():
     print("\n---------------INICIALIZACIÓN---------------\n")
+    print("Se recomienda un MÍNIMO de 20 y MÁXIMO de 200, puede tardar algunos minutos con datasets grandes")
     veces_a_aplicar = input("Ingresar número de iteraciones: ")
     print("\nLista de rutas: ", end='')
     print_lista_rutas()
 
-    ruta_archivo = input("\nIngresar ruta de archivo: ")
+    ruta_archivo = input("\nIngresar ruta de archivo ejem:'data/A-n32-k5.vrp',(opcional): ")
     num_iteraciones, ruta = validar_input(veces_a_aplicar, ruta_archivo)
 
     show_constants()
@@ -70,7 +71,7 @@ def main():
     best_solution = initial_solution
 
     for i in range(num_iteraciones):
-        # recocido simulado
+        # recocido simulado        
         start_time = process_time()
         final_solution = funcion_recocido(
             nodes, capacity, previous_solution=best_solution)
@@ -104,7 +105,7 @@ def main():
         print(f"Costo {cost_diff_total:.2f}% MENOR al inicial")
         print(f"Tiempo de ejecución: {time_diff:.3f} segundos")
 
-        # gf.live_plot(nodes, best_solution)
+        # gf.live_plot(nodes, best_solution)  # single graph
 
         # subplots' axis + plotting
         gf.live_subplot(nodes, best_solution, ax2, "Solución actual")
