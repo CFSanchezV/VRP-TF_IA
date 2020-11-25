@@ -20,7 +20,7 @@ rutas_locales = ['A-n32-k5.vrp', 'B-n31-k5.vrp', 'E-n101-k14.vrp', 'X-n101-k25.v
 optimals = [784, 672, 1071, 27591, 742, 955, 569, 14971]
 optimals_dict = {'a': 784, 'b': 672, 'e': 1071, 'x': 27591, 'a3': 742, 'b3': 955, 'e3': 569, 'x3': 14971}
 
-# CONSTANTS
+# CONSTANTS, need Tweaking
 INITIAL_TEMP = 20
 T_FACTOR = 0.95
 FINAL_TEMP = 1
