@@ -27,14 +27,10 @@ FINAL_TEMP = 1
 
 
 def show_constants():
-    constdict = {
-        "INITIAL_TEMP": INITIAL_TEMP,
-        "FINAL_TEMP": FINAL_TEMP,
-        "T_FACTOR": T_FACTOR
-    }
-    print("Parametros iniciales:")
-    for k, v in constdict.items():
-        print(k + ":", v)
+    constdict = {"TEMPERATUA_INICIAL": INITIAL_TEMP, "TEMPERATUA_FINAL": FINAL_TEMP, "delta_T": T_FACTOR}
+    print("Parámetros iniciales del algoritmo Simulated Annealing:")
+    for key, val in constdict.items():
+        print(key + ":", val)
     print("")
 
 
