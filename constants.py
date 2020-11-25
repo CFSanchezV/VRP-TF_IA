@@ -27,7 +27,7 @@ FINAL_TEMP = 1
 
 
 def show_constants():
-    constdict = {"TEMPERATUA_INICIAL": INITIAL_T, "TEMPERATURA_FINAL": FINAL_TEMP, "delta_T": T_FACTOR}
+    constdict = {"TEMPERATURA_INICIAL": INITIAL_T, "TEMPERATURA_FINAL": FINAL_TEMP, "delta_T": T_FACTOR}
     print("Parámetros iniciales del algoritmo Simulated Annealing:")
     for key, val in constdict.items():
         print(key + ":", val)
@@ -40,8 +40,10 @@ def percent_diff(a, b):
 
 
 def print_nodes(nodes):
-    print("Nodos (clientes):")
-    for node in nodes:
+    depot = nodes[0]
+    print("Lista de clientes(Nodos):")
+    print(f"Depósito id:{depot.id} con Demanda: {depot.demand} y Posición: ({depot.x}, {depot.y})")
+    for node in nodes[1:]:
         print(node)
 
 
@@ -53,12 +55,12 @@ def set_xy_labels(ax1):
 def print_lista_rutas():
     for i, ruta in enumerate(rutas_locales):
         if i == len(rutas_locales)-1:
-            print("'data/" + ruta + "'", end=' o dejar en blanco para descargar datos')
+            print("'data/" + ruta + "'", end=' O DEJAR VACIO PARA DESCARGAR datos')
         else:
             print("'data/" + ruta + "'", end=', ')
 
 
 def print_routes(all_routes):
-    print("Rutas generadas:")
+    print("Rutas generadas según ID de Cliente(Nodo):")
     for i, route in enumerate(all_routes):
         print("Ruta", i+1, ":", route)

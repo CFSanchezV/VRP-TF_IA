@@ -37,7 +37,7 @@ def uselocalData(localpath):
             strFile = file.read()
 
     except FileNotFoundError:
-        print(f"\nLa ruta '{localpath}' no es una ruta válida")
+        print(f"\nLa ruta '{localpath}' inválida, por favor seguir el formato 'data/nombreArchivo.vrp'")
         exit()
 
     name = os.path.basename(file.name)

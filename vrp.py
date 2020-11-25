@@ -1,4 +1,5 @@
 from time import process_time
+from math import inf as infinito
 from constants import show_constants, rutas_locales, percent_diff, print_nodes, print_lista_rutas, set_xy_labels, print_routes
 from initialSolution import downloadData, uselocalData, optimals, get_solution_routes
 import graph
@@ -14,18 +15,19 @@ def validar_input(veces_a_aplicar, ruta_archivo):
         exit()
 
     if ruta == "":
-        print("Ruta vacía, descargando datos aleatorios de CVRPLIB")
+        print("\nRuta vacía, descargando datos aleatorios de CVRPLIB, URL: http://vrp.atd-lab.inf.puc-rio.br/index.php/en/\n")
     return veces, ruta
 
 
 def main():
-    print("\n---------------INICIALIZACIÓN---------------\n")
-    print("Se recomienda un MÍNIMO de 20 y MÁXIMO de 200, puede tardar algunos minutos con datasets grandes")
+    print("\nNOTA: Se recomienda aumentar el tamaño de la consola para visualizar mejor los datos durante y al final de la ejecución del programa")
+    print("---------------INICIALIZACIÓN---------------\n")    
+    print("Se recomienda un MÍNIMO de 20 y un MÁXIMO de 200, puede tardar algunos minutos con datasets grandes. Los 2 primeros datasets locales (A y B) son los más pequeños")
     veces_a_aplicar = input("Ingresar número de iteraciones: ")
-    print("\nLista de rutas: ", end='')
+    print("\nArchivos locales: ", end='')
     print_lista_rutas()
 
-    ruta_archivo = input("\nIngresar ruta de archivo ejem:'data/A-n32-k5.vrp',(opcional): ")
+    ruta_archivo = input("\nIngresar ruta de archivo, por ejemplo:'data/A-n32-k5.vrp', (opcional): ")
     num_iteraciones, ruta = validar_input(veces_a_aplicar, ruta_archivo)
 
     show_constants()
@@ -36,22 +38,26 @@ def main():
         capacity, nodes, optimal_idx = downloadData()
 
     optimal_cost = optimals[optimal_idx]
-
+    
     # Clientes y capacidad de camiones
+    print("--------Datos del dataset--------")    
     print_nodes(nodes)
-    print("Capacidad de camiones: ", capacity)
+    print("\nCapacidad de camiones: ", capacity)
+    
+    print("\n^^Arriba se muestran los datos del dataset elegido/descargado^^")
+    lil_break = input("-------Presione ENTER para continuar-------")
 
     # Asignar funciones para aumentar velocidad
     funcion_recocido = SA.annealing
     funcion_costo = SA.costo_solucion
     gf = graph
 
-    print("\n---------------SOLUCION INICIAL---------------\n")
+    print("\n---------------SOLUCIÓN INICIAL---------------\n")
 
     initial_solution = SA.greedy_sol(nodes, capacity)
     costo_inicial = funcion_costo(initial_solution, nodes)
-    print("Solucion inicial:", initial_solution)
-    print("Costo solucion inicial:", costo_inicial)
+    print("Solución inicial:", initial_solution)
+    print("Costo solución inicial:", costo_inicial)
 
     # gf.live_plot(nodes, initial_solution)
 
@@ -59,14 +65,13 @@ def main():
     fig, (ax1, ax2) = gf.plt.subplots(nrows=1, ncols=2, figsize=(12, 5), tight_layout=True)
     fig.canvas.set_window_title('Enrutamiento de vehiculos')
     
-    gf.live_subplot(nodes, initial_solution, ax1, "Primera solución")    
+    gf.live_subplot(nodes, initial_solution, ax1, "Primera Solución")    
 
-    print("\n---------------EJECUCION---------------\n")
+    print("\n---------------EJECUCIÓN DE ALGORITMO SA---------------\n")
 
     cost_sum = 0
-    time_sum = 0
-    max_cost = 0
-    min_cost = 999999
+    time_sum = 0    
+    min_cost = infinito
 
     best_solution = initial_solution
 
@@ -91,9 +96,9 @@ def main():
 
         # estadisticas
         cost_diff_optimal = percent_diff(costo_final, optimal_cost)
-        cost_diff_total = percent_diff(costo_inicial, costo_final)
-        max_cost = max(max_cost, costo_final)
+        cost_diff_total = percent_diff(costo_inicial, costo_final)        
         min_cost = min(min_cost, costo_final)
+        # max_cost?
 
         # mostrar datos        
         print("\n ITERACION", i + 1)
@@ -108,7 +113,7 @@ def main():
         # gf.live_plot(nodes, best_solution)  # single graph
 
         # subplots' axis + plotting
-        gf.live_subplot(nodes, best_solution, ax2, "Solución actual")
+        gf.live_subplot(nodes, best_solution, ax2, "Solución Actual")
 
     # end isinteractive
     if gf.plt.isinteractive():
@@ -119,7 +124,7 @@ def main():
 
 
     # -------------------MOSTRAR RESUMEN DE RESULTADO OBTENIDO---------------
-    print("\n----RESUMEN Y ANALISIS DE EJECUCIÓN:----\n")  
+    print("\n----RESUMEN Y ANÁLISIS DE EJECUCIÓN:----\n")  
 
     average_cost = int(cost_sum / num_iteraciones)
     average_time = time_sum / num_iteraciones
@@ -129,7 +134,7 @@ def main():
     print("Costo óptimo conocido: ", optimal_cost)
     print("Costo solución final: ", costo_final)
     print("Costo inicial: ", costo_inicial)
-    print(f"Costo {cost_diff_optimal:.2f}% MAYOR al óptimo")
+    print(f"Mejor costo hallado es {cost_diff_optimal:.2f}% MAYOR al óptimo (PEOR)")
     print("Costo promedio:", average_cost, "\n")    
     # Mostrar Rutas
     rutas_en_solucion = get_solution_routes(best_solution)
