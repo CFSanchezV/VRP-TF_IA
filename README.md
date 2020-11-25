@@ -15,16 +15,16 @@
 
 _Este proyecto utiliza propiedades de estas librerías._ 
 
-* [Requests](https://pandas.pydata.org/docs/) - Documentación de Requests
-* [Matplotlib](https://numpy.org/doc/) - Documentación de Matplotlib
+* [Requests](https://requests.readthedocs.io/en/master/) - Documentación de Requests
+* [Matplotlib](https://matplotlib.org/3.3.3/contents.html) - Documentación de Matplotlib
 
 
-## Instalación y uso 🛠🔧
+## Instalación y uso 🔧
 _Estas instrucciones permitirán obtener una copia del proyecto en funcionamiento en una máquina local._
 
 Debe de asegurarse de tener `Python` instalado en su ordenado desde la versión 3.0 para adelante y el instalador de paquetes `pip` o `conda`.
 
-_Instalación de librerías en Windows 10_
+_Instalación de librerías_
 
 ```bash
 pip install requests
@@ -38,12 +38,6 @@ git clone https://github.com/CFSanchezV/VRP-TF_IA/tree/master
 cd VRP-TF_IA
 python vrp.py
 ```
-
-#### TODOs:
-1. Leer archivos de referencias.
-2. Mostrar gráficos
-3. Hacer pruebas
-4. Agregar PDF LaTeX de OverLeaf
 
 
 ## Autores ✒️

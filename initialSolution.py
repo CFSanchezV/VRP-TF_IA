@@ -1,9 +1,28 @@
-from mainClasses import *
+from mainClasses import Node, Route
 from copy import deepcopy
-from constants import urls
+from constants import urls, optimals_dict, optimals
 import requests
 import random as rnd
+import os
+from collections import OrderedDict
 
+def get_solution_routes(solution_input):
+    all_routes = []    
+    route = []
+    for i, sol in enumerate(solution_input[1:]):        
+        l = len(route)
+
+        if sol == 0 and l > 0 and solution_input[i-1] != 0:
+            r = list(OrderedDict.fromkeys(route))
+            all_routes.append(r)
+            route = []
+        elif sol !=0:
+            route.append(sol)
+        else:
+            continue
+
+    # list of lists of routes
+    return all_routes
 
 def separator(longStr, start, end):
     i = longStr.find(start) + len(start)
@@ -13,11 +32,23 @@ def separator(longStr, start, end):
 
 
 def uselocalData(localpath):
-    with open(localpath, 'r') as file:
-        strFile = file.read()
+    try:
+        with open(localpath, 'r') as file:
+            strFile = file.read()
 
-    node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
-    demand_strings = separator(strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
+    except FileNotFoundError:
+        print(f"\nLa ruta '{localpath}' no es una ruta válida")
+        exit()
+
+    name = os.path.basename(file.name)
+    fLetter = name[0].lower()
+    val = optimals_dict[fLetter]
+    idx = optimals.index(val)
+
+    node_strings = separator(
+        strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
+    demand_strings = separator(
+        strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
     capacity_string = separator(strFile, "CAPACITY :", "NODE_COORD_SECTION")
     capacity = int(capacity_string.strip())
     # print(demand_strings)
@@ -25,19 +56,24 @@ def uselocalData(localpath):
     n_clients = len(demand_strings)
     nodes = []
     for i in range(n_clients):
-        x, y = node_strings[i].strip().split(" ")[1:]   
-        demand  = demand_strings[i].strip().split(" ")[-1]
+        x, y = node_strings[i].strip().split(" ")[1:]
+        demand = demand_strings[i].strip().split(" ")[-1]
 
         nodes.append(Node(i, demand, x, y))
 
-    return capacity, nodes
+    return capacity, nodes, idx
+
 
 def downloadData():
-    resp = requests.get(rnd.choice(urls), stream=True)
+    anyURL = rnd.choice(urls)
+    resp = requests.get(anyURL, stream=True)
     strFile = resp.text
+    idx = urls.index(anyURL)
 
-    node_strings = separator(strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
-    demand_strings = separator(strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
+    node_strings = separator(
+        strFile, "NODE_COORD_SECTION", "DEMAND_SECTION").split('\n')[1:-1]
+    demand_strings = separator(
+        strFile, "DEMAND_SECTION", "DEPOT_SECTION").split('\n')[1:-1]
     capacity_string = separator(strFile, "CAPACITY :", "NODE_COORD_SECTION")
     capacity = int(capacity_string.strip())
 
@@ -49,7 +85,7 @@ def downloadData():
 
         nodes.append(Node(i, demand, x, y))
 
-    return capacity, nodes
+    return capacity, nodes, idx
 
 
 def greedy_sol(nodes, capacity):
@@ -93,6 +129,7 @@ def greedy_sol(nodes, capacity):
                 cost_to_next_node = nodes[truck_id].distance_to_node(
                     depot.x, depot.y)
 
+            # while len(clients_to_visit)
             # go to next node and update truck, routes
             route.path.append(next_node.id)
             route.cost += cost_to_next_node
@@ -114,36 +151,17 @@ def greedy_sol(nodes, capacity):
     return formatter(routes)
 
 
-'''
-Format 1
-input list of Routes, start formatter  Ruta | Costo: 158, Camino: [0, 21, 16, 18, 25, 5, 4, 29, 8, 11, 0],
-  Ruta | Costo: 115, Camino: [0, 28, 26, 12, 23, 7, 6, 0],
-  Ruta | Costo: 240, Camino: [0, 22, 9, 13, 17, 30, 3, 2, 0],
-  Ruta | Costo: 244, Camino: [0, 24, 19, 1, 15, 14, 10, 20, 0],
-  Ruta | Costo: 188, Camino: [0, 27, 0]
-]
-
-output, list of Routes without 0s:
-[
-  Ruta | Costo: 158, Camino: [21, 16, 18, 25, 5, 4, 29, 8, 11],
-  Ruta | Costo: 115, Camino: [28, 26, 12, 23, 7, 6],
-  Ruta | Costo: 240, Camino: [22, 9, 13, 17, 30, 3, 2],
-  Ruta | Costo: 244, Camino: [24, 19, 1, 15, 14, 10, 20],
-  Ruta | Costo: 188, Camino: [27]
-]
-
-'''
-
-
 def formatter(solution):
-    solution_as_list = [0]
+    solution_lst = [0]
     for route in solution:
-        solution_as_list += route.path[1:]
-    return solution_as_list
+        # print(route)
+        solution_lst += route.path[1:]
+    # print("formatted solution: ", solution_lst)
+    return solution_lst
 
 
 '''
-Format 2
+Format
 input list of Routes, start and end with 0s:
 [
   Ruta | Costo: 158, Camino: [0, 21, 16, 18, 25, 5, 4, 29, 8, 11, 0],
@@ -162,3 +180,9 @@ output, list of integers:
   0, 27, 0
 ]
 '''
+
+# TESTING
+# sol = [0, 26, 28, 23, 23, 7, 0, 0, 15, 11, 11, 14, 24, 1, 19, 29, 0, 2, 27, 10, 2, 10, 10, 20, 10, 0, 30, 22, 3, 6, 3, 6, 9, 0, 0, 0, 0, 21, 17, 13, 9, 8, 12, 0, 0, 4, 5, 16, 18, 25, 25, 25, 21, 0, 0, 0, 0, 0]
+# print(sol)
+# print("")
+# get_solution_routes(sol)

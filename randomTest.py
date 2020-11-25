@@ -11,7 +11,7 @@ def print_solution(header, solution):
         print(solution)
 
 
-def percent(a, b):
+def percent_diff(a, b):
     return 100 * (a - b) / a
 
 
@@ -60,16 +60,29 @@ def parsing(path):
     
     return nodes
 
+# INITIAL urls
 urlA = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/A/A-n32-k5.vrp"
 ulrB = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/B/B-n31-k5.vrp"
 ulrE = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/E/E-n101-k14.vrp"
 urlX = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/X/X-n101-k25.vrp"
-urls = [urlA, ulrB, ulrE, urlX]
 
-resp = requests.get(rnd.choice(urls), stream=True)
 
-for line in resp.iter_lines(decode_unicode=True):
-    print(line)
+# EXTRA urls
+urlA3 = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/A/A-n33-k6.vrp"
+urlB3 = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/B/B-n35-k5.vrp"
+urlE3 = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/E/E-n23-k3.vrp"
+urlX3 = "http://vrp.atd-lab.inf.puc-rio.br/media/com_vrp/instances/X/X-n110-k13.vrp"
+
+urls = [urlA, ulrB, ulrE, urlX, urlA3, urlB3, urlE3, urlX3]
+
+
+
+
+# --------------------TESTING SECTION--------------------
+# resp = requests.get(rnd.choice(urls), stream=True)
+
+# for line in resp.iter_lines(decode_unicode=True):
+#     print(line)
 
 # with open("data/A-n32-k5.vrp") as file:
 #     for line in file:

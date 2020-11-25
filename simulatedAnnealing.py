@@ -1,7 +1,7 @@
 from constants import T_FACTOR, INITIAL_TEMP, FINAL_TEMP
 from initialSolution import greedy_sol, rnd
-from math import exp
 from copy import deepcopy
+import math
 
 
 # intercambiar dentro de solucion
@@ -22,13 +22,11 @@ def intercambiar(solution_input):
 # Mover a indice aleatorio
 def mover(solution_input):
     last_pos = len(solution_input) - 2
-
     i = rnd.randint(1, last_pos)
     j = rnd.randint(1, last_pos)
 
     # minimo: i, maximo: j
-    i = min(i, j)
-    j = max(i, j)
+    i, j = min(i, j), max(i, j)
 
     # Mover de indice i a indice j
     return solution_input[:i] + solution_input[i + 1:j] + [solution_input[i]] + solution_input[j:]
@@ -37,13 +35,11 @@ def mover(solution_input):
 # Invertir seccion
 def invertir(solution_input):
     last_pos = len(solution_input) - 2
-
     i = rnd.randint(1, last_pos)
     j = rnd.randint(1, last_pos)
 
     # minimo: i, maximo: j
-    i = min(i, j)
-    j = max(i, j)
+    i, j = min(i, j), max(i, j)
 
     # Invertir de indice i a indice j
     return solution_input[:i] + solution_input[i:j][::-1] + solution_input[j:]
@@ -72,7 +68,7 @@ def solucion_es_valida(solution, nodes, capacity):
 
 
 def acepta_nuevo_vecino(delta, T):
-    prob = exp(-delta / T)
+    prob = math.exp(-delta / T)
     return rnd.random() < prob
 
 
@@ -88,21 +84,21 @@ def costo_solucion(solution_input, nodes):
     return cost
 
 
-def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, initial_solution=None):
-    if initial_solution is None:
-        initial_solution = greedy_sol(nodes, capacity)
+def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, previous_solution=None):
+    if previous_solution is None:
+        previous_solution = greedy_sol(nodes, capacity)
 
-    mejor = sol_actual = initial_solution
+    mejor_sol = sol_actual = previous_solution
     mejor_costo = costo_actual = costo_solucion(sol_actual, nodes)
 
     T = init_t
-    N = len(nodes)
+    N = int(len(nodes)*0.9)
 
     while T > FINAL_TEMP:
         i = 0
 
         while i < N:
-            # primer estado
+            # primer estado alterado
             nueva_sol = generar_vecino(sol_actual)
             # solucion no valida
             if not solucion_es_valida(nueva_sol, nodes, capacity):
@@ -116,7 +112,7 @@ def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, initial_s
                 sol_actual = nueva_sol
                 costo_actual = nuevo_costo
                 if nuevo_costo < mejor_costo:  # es mejor solucion
-                    mejor = nueva_sol
+                    mejor_sol = nueva_sol
                     mejor_costo = nuevo_costo
 
             # peor solucion: probabilidad math.exp(-delta/T)
@@ -127,4 +123,6 @@ def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, initial_s
             i += 1
         # ajustar temperatura
         T = T*t_factor
-    return mejor
+        # print(T)  # show Temp
+
+    return mejor_sol

@@ -15,7 +15,7 @@ class Node:
         self.y = int(y)
 
     def __repr__(self):
-        return f"( Node {self.id} | Demanda: {self.demand}, Posicion: ({self.x}, {self.y}) )"
+        return f"( Nodo {self.id} | Demanda: {self.demand}, Posición: ({self.x}, {self.y}) )"
 
     # Comparator True | False eq
     def __eq__(self, other):
