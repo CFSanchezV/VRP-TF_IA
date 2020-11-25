@@ -4,7 +4,25 @@ from constants import urls, optimals_dict, optimals
 import requests
 import random as rnd
 import os
+from collections import OrderedDict
 
+def get_solution_routes(solution_input):
+    all_routes = []    
+    route = []
+    for i, sol in enumerate(solution_input[1:]):        
+        l = len(route)
+
+        if sol == 0 and l > 0 and solution_input[i-1] != 0:
+            r = list(OrderedDict.fromkeys(route))
+            all_routes.append(r)
+            route = []
+        elif sol !=0:
+            route.append(sol)
+        else:
+            continue
+
+    # list of lists of routes
+    return all_routes
 
 def separator(longStr, start, end):
     i = longStr.find(start) + len(start)
@@ -111,6 +129,7 @@ def greedy_sol(nodes, capacity):
                 cost_to_next_node = nodes[truck_id].distance_to_node(
                     depot.x, depot.y)
 
+            # while len(clients_to_visit)
             # go to next node and update truck, routes
             route.path.append(next_node.id)
             route.cost += cost_to_next_node
@@ -132,38 +151,17 @@ def greedy_sol(nodes, capacity):
     return formatter(routes)
 
 
-'''
-Format 1
-input list of Routes, start formatter  Ruta | Costo: 158, Camino: [0, 21, 16, 18, 25, 5, 4, 29, 8, 11, 0],
-  Ruta | Costo: 115, Camino: [0, 28, 26, 12, 23, 7, 6, 0],
-  Ruta | Costo: 240, Camino: [0, 22, 9, 13, 17, 30, 3, 2, 0],
-  Ruta | Costo: 244, Camino: [0, 24, 19, 1, 15, 14, 10, 20, 0],
-  Ruta | Costo: 188, Camino: [0, 27, 0]
-]
-
-output, list of Routes without 0s:
-[
-  Ruta | Costo: 158, Camino: [21, 16, 18, 25, 5, 4, 29, 8, 11],
-  Ruta | Costo: 115, Camino: [28, 26, 12, 23, 7, 6],
-  Ruta | Costo: 240, Camino: [22, 9, 13, 17, 30, 3, 2],
-  Ruta | Costo: 244, Camino: [24, 19, 1, 15, 14, 10, 20],
-  Ruta | Costo: 188, Camino: [27]
-]
-
-'''
-
-
 def formatter(solution):
-    solution_as_list = [0]
+    solution_lst = [0]
     for route in solution:
-        print(route)
-        solution_as_list += route.path[1:]
-    # print("formatted solution: ", solution_as_list)
-    return solution_as_list
+        # print(route)
+        solution_lst += route.path[1:]
+    # print("formatted solution: ", solution_lst)
+    return solution_lst
 
 
 '''
-Format 2
+Format
 input list of Routes, start and end with 0s:
 [
   Ruta | Costo: 158, Camino: [0, 21, 16, 18, 25, 5, 4, 29, 8, 11, 0],
@@ -182,3 +180,9 @@ output, list of integers:
   0, 27, 0
 ]
 '''
+
+# TESTING
+# sol = [0, 26, 28, 23, 23, 7, 0, 0, 15, 11, 11, 14, 24, 1, 19, 29, 0, 2, 27, 10, 2, 10, 10, 20, 10, 0, 30, 22, 3, 6, 3, 6, 9, 0, 0, 0, 0, 21, 17, 13, 9, 8, 12, 0, 0, 4, 5, 16, 18, 25, 25, 25, 21, 0, 0, 0, 0, 0]
+# print(sol)
+# print("")
+# get_solution_routes(sol)

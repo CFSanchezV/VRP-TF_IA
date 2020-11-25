@@ -1,7 +1,7 @@
 from time import process_time
-from constants import show_constants, rutas_locales, percent_diff, print_nodes, print_lista_rutas, set_xy_labels
-from initialSolution import downloadData, uselocalData, optimals
-import graph as gf
+from constants import show_constants, rutas_locales, percent_diff, print_nodes, print_lista_rutas, set_xy_labels, print_routes
+from initialSolution import downloadData, uselocalData, optimals, get_solution_routes
+import graph
 import simulatedAnnealing as SA
 
 
@@ -35,6 +35,7 @@ def main():
         capacity, nodes, optimal_idx = downloadData()
 
     optimal_cost = optimals[optimal_idx]
+
     # Clientes y capacidad de camiones
     print_nodes(nodes)
     print("Capacidad de camiones: ", capacity)
@@ -42,6 +43,7 @@ def main():
     # Asignar funciones para aumentar velocidad
     funcion_recocido = SA.annealing
     funcion_costo = SA.costo_solucion
+    gf = graph
 
     print("\n---------------SOLUCION INICIAL---------------\n")
 
@@ -56,7 +58,7 @@ def main():
     fig, (ax1, ax2) = gf.plt.subplots(nrows=1, ncols=2, figsize=(12, 5), tight_layout=True)
     fig.canvas.set_window_title('Enrutamiento de vehiculos')
     
-    gf.live_subplot(nodes, initial_solution, ax1, "Primera solución")
+    gf.live_subplot(nodes, initial_solution, ax1, "Primera solución")    
 
     print("\n---------------EJECUCION---------------\n")
 
@@ -89,17 +91,17 @@ def main():
         # estadisticas
         cost_diff_optimal = percent_diff(costo_final, optimal_cost)
         cost_diff_total = percent_diff(costo_inicial, costo_final)
-
-        # mostrar datos
         max_cost = max(max_cost, costo_final)
         min_cost = min(min_cost, costo_final)
-        print(f"\n ITERACION {i + 1} ")
 
-        print("Solucion final:", final_solution)
+        # mostrar datos        
+        print("\n ITERACION", i + 1)
+
+        print("Solución final:", final_solution)
         print("Costo final:", costo_final)
-        print(f"Costo {cost_diff_optimal:.2f}% MAYOR que el óptimo")
+        print(f"Costo {cost_diff_optimal:.2f}% MAYOR al óptimo")
 
-        print(f"Costo {cost_diff_total:.2f}% MENOR que el inicial")
+        print(f"Costo {cost_diff_total:.2f}% MENOR al inicial")
         print(f"Tiempo de ejecución: {time_diff:.3f} segundos")
 
         # gf.live_plot(nodes, best_solution)
@@ -110,11 +112,34 @@ def main():
     # end isinteractive
     if gf.plt.isinteractive():
         gf.plt.ioff()
+        gf.plt.close(fig)
+    
+    print("\n----FIN DE EJECUCIÓN^^----\n")    
 
-    gf.draw_solution(nodes, final_solution)
+
+    # -------------------MOSTRAR RESUMEN DE RESULTADO OBTENIDO---------------
+    print("\n----RESUMEN Y ANALISIS DE EJECUCIÓN:----\n")  
+
+    average_cost = int(cost_sum / num_iteraciones)
+    average_time = time_sum / num_iteraciones
+
+    print(f"{num_iteraciones} ejecuciones del algoritmo en: {time_sum:.3f} segundos")
+    print(f"Tiempo promedio de ejecución: {average_time:.3f} segundos\n")
+    print("Costo óptimo conocido: ", optimal_cost)
+    print("Costo solución final: ", costo_final)
+    print("Costo inicial: ", costo_inicial)
+    print(f"Costo {cost_diff_optimal:.2f}% MAYOR al óptimo")
+    print("Costo promedio:", average_cost)    
+    # Mostrar Rutas
+    rutas_en_solucion = get_solution_routes(best_solution)
+    print_routes(rutas_en_solucion)
+
+
+    # Graficar solución final
+    gf.draw_solution(nodes, best_solution)
 
 
 if __name__ == "__main__":
     main()
     # TODO:
-    # calcular estadisticas para tablas y comparaciones
+    # obtener estadisticas para tablas y comparaciones---

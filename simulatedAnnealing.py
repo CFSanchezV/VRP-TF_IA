@@ -98,7 +98,7 @@ def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, previous_
         i = 0
 
         while i < N:
-            # primer estado
+            # primer estado alterado
             nueva_sol = generar_vecino(sol_actual)
             # solucion no valida
             if not solucion_es_valida(nueva_sol, nodes, capacity):
@@ -123,4 +123,6 @@ def annealing(nodes, capacity, init_t=INITIAL_TEMP, t_factor=T_FACTOR, previous_
             i += 1
         # ajustar temperatura
         T = T*t_factor
+        # print(T)  # show Temp
+
     return mejor_sol
