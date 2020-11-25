@@ -125,7 +125,7 @@ def draw_solution(nodes, solution):
     depot = nodes[0]
     clients = nodes[1:]
 
-    plt.title("¡¡Solución final!!", fontsize=15)
+    plt.title("Solución final!", fontsize=15)
 
     # draw dots
     x_lst = []
