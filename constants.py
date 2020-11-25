@@ -20,21 +20,17 @@ rutas_locales = ['A-n32-k5.vrp', 'B-n31-k5.vrp', 'E-n101-k14.vrp', 'X-n101-k25.v
 optimals = [784, 672, 1071, 27591, 742, 955, 569, 14971]
 optimals_dict = {'a': 784, 'b': 672, 'e': 1071, 'x': 27591, 'a3': 742, 'b3': 955, 'e3': 569, 'x3': 14971}
 
-# CONSTANTS
-INITIAL_TEMP = 50
-FINAL_TEMP = 1
+# CONSTANTS, need Tweaking
+INITIAL_T = 20
 T_FACTOR = 0.95
+FINAL_TEMP = 1
 
 
 def show_constants():
-    constdict = {
-        "INITIAL_TEMP": INITIAL_TEMP,
-        "FINAL_TEMP": FINAL_TEMP,
-        "T_FACTOR": T_FACTOR
-    }
-    print("Parametros iniciales:")
-    for k, v in constdict.items():
-        print(k + ":", v)
+    constdict = {"TEMPERATURA_INICIAL": INITIAL_T, "TEMPERATURA_FINAL": FINAL_TEMP, "delta_T": T_FACTOR}
+    print("Parámetros iniciales del algoritmo Simulated Annealing:")
+    for key, val in constdict.items():
+        print(key + ":", val)
     print("")
 
 
@@ -44,8 +40,10 @@ def percent_diff(a, b):
 
 
 def print_nodes(nodes):
-    print("Nodos (clientes):")
-    for node in nodes:
+    depot = nodes[0]
+    print("Lista de clientes(Nodos):")
+    print(f"Depósito id:{depot.id} con Demanda: {depot.demand} y Posición: ({depot.x}, {depot.y})")
+    for node in nodes[1:]:
         print(node)
 
 
@@ -57,12 +55,12 @@ def set_xy_labels(ax1):
 def print_lista_rutas():
     for i, ruta in enumerate(rutas_locales):
         if i == len(rutas_locales)-1:
-            print("'data/" + ruta + "'", end=' o dejar en blanco para descargar datos')
+            print("'data/" + ruta + "'", end=' O DEJAR VACIO PARA DESCARGAR datos')
         else:
             print("'data/" + ruta + "'", end=', ')
 
 
 def print_routes(all_routes):
-    print("Rutas generadas:")
+    print("Rutas generadas según ID de Cliente(Nodo):")
     for i, route in enumerate(all_routes):
         print("Ruta", i+1, ":", route)

@@ -10,9 +10,9 @@ def get_solution_routes(solution_input):
     all_routes = []    
     route = []
     for i, sol in enumerate(solution_input[1:]):        
-        l = len(route)
+        length = len(route)
 
-        if sol == 0 and l > 0 and solution_input[i-1] != 0:
+        if sol == 0 and length > 0 and solution_input[i-1] != 0:
             r = list(OrderedDict.fromkeys(route))
             all_routes.append(r)
             route = []
@@ -37,7 +37,7 @@ def uselocalData(localpath):
             strFile = file.read()
 
     except FileNotFoundError:
-        print(f"\nLa ruta '{localpath}' no es una ruta válida")
+        print(f"\nLa ruta '{localpath}' inválida, por favor seguir el formato 'data/nombreArchivo.vrp'")
         exit()
 
     name = os.path.basename(file.name)

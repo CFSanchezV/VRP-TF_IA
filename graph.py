@@ -13,7 +13,10 @@ def live_subplot(nodes, solution, axis, axis_title):
     axis.set_title(axis_title, fontsize=16)
     set_xy_labels(axis)
     subplot_solution(nodes, solution, axis)
-    plt.pause(0.5)  # pause in secs
+    
+    # pause in secs
+    plt.pause(0.1)  # Short pause for testing
+    # plt.pause(0.2)  # Slightly longer pause for show
 
 
 def live_plot(nodes, solution):
@@ -125,7 +128,8 @@ def draw_solution(nodes, solution):
     depot = nodes[0]
     clients = nodes[1:]
 
-    plt.title("¡¡Solución final!!", fontsize=15)
+    plt.title("¡Mejor Solución hallada!", fontsize=15)
+    plt.gcf().canvas.set_window_title("Solución Final")
 
     # draw dots
     x_lst = []

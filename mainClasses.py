@@ -2,6 +2,7 @@ from math import sqrt
 
 class Node:
     """ Node class / Clients """
+    
     def __init__(self, id, demand, x, y):
         """
         param id: identifier
@@ -15,7 +16,7 @@ class Node:
         self.y = int(y)
 
     def __repr__(self):
-        return f"( Nodo {self.id} | Demanda: {self.demand}, Posición: ({self.x}, {self.y}) )"
+        return f"Cliente {self.id} con Demanda: {self.demand} y Posición: ({self.x}, {self.y})"
 
     # Comparator True | False eq
     def __eq__(self, other):
@@ -23,11 +24,12 @@ class Node:
 
     def distance_to_node(self, x, y):
         # return int
-        return round( sqrt( (self.x - x)**2 + (self.y - y)**2 ) )
+        return round(sqrt((self.x - x)**2 + (self.y - y)**2))
 
 
 class Route:
     """ Route class """
+    
     def __init__(self, path, cost=0):
         """
         param path: list
