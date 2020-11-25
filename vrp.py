@@ -129,7 +129,7 @@ def main():
     print("Costo solución final: ", costo_final)
     print("Costo inicial: ", costo_inicial)
     print(f"Costo {cost_diff_optimal:.2f}% MAYOR al óptimo")
-    print("Costo promedio:", average_cost)    
+    print("Costo promedio:", average_cost, "\n")    
     # Mostrar Rutas
     rutas_en_solucion = get_solution_routes(best_solution)
     print_routes(rutas_en_solucion)

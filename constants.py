@@ -22,8 +22,8 @@ optimals_dict = {'a': 784, 'b': 672, 'e': 1071, 'x': 27591, 'a3': 742, 'b3': 955
 
 # CONSTANTS
 INITIAL_TEMP = 20
-FINAL_TEMP = 1
 T_FACTOR = 0.95
+FINAL_TEMP = 1
 
 
 def show_constants():

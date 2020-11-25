@@ -129,6 +129,7 @@ def draw_solution(nodes, solution):
     clients = nodes[1:]
 
     plt.title("¡Mejor Solución hallada!", fontsize=15)
+    plt.gcf().canvas.set_window_title("Solución Final")
 
     # draw dots
     x_lst = []
