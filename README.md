@@ -38,9 +38,10 @@ pip install matplotlib
 _Clonación del repositorio y ejecución de la aplicación_
 
 ```bash
-git clone https://github.com/CFSanchezV/VRP-TF_IA/tree/master
+git clone https://github.com/CFSanchezV/VRP-TF_IA.git
 cd VRP-TF_IA
 python vrp.py
+# Seguir las instrucciones
 ```
 
 
