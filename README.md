@@ -5,7 +5,7 @@
 
 
 ## Pequeño Vistazo del programa
-![](./data/Pruebas y Resultados/datasetA.png)
+![](./data/Pruebas y Resultados/datasetA.PNG)
 
 
 ### Algoritmos
