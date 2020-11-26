@@ -1,0 +1,38 @@
+----RESUMEN Y ANALISIS DE EJECUCIÓN:----
+
+200 ejecuciones del algoritmo en: 979.719 segundos
+Tiempo promedio de ejecución: 4.899 segundos
+
+Costo óptimo conocido:  27591
+Costo solución final:  28768
+Costo inicial:  41944
+Costo 4.09% MAYOR al óptimo
+Costo promedio: 28882
+
+Rutas generadas:
+Ruta 1 : [37, 48, 47, 38]
+Ruta 2 : [6, 36, 29, 57, 40]
+Ruta 3 : [1, 70, 54]
+Ruta 4 : [76, 74, 13, 4]
+Ruta 5 : [33, 93, 75]
+Ruta 6 : [34, 64, 87, 60, 67, 88]
+Ruta 7 : [79, 30, 85, 50]
+Ruta 8 : [23, 97, 27]
+Ruta 9 : [26, 43, 45, 2, 49, 7, 25]
+Ruta 10 : [39, 78, 42, 77]
+Ruta 11 : [68, 90, 84, 66]
+Ruta 12 : [69, 16, 55]
+Ruta 13 : [71, 62, 99, 98, 89]
+Ruta 14 : [34, 3, 44, 18]
+Ruta 15 : [20, 41, 22, 15]
+Ruta 16 : [80, 17, 56]
+Ruta 17 : [58, 12, 5]
+Ruta 18 : [92, 9, 86]
+Ruta 19 : [35, 46, 24, 95, 32]
+Ruta 20 : [10, 65, 28, 63]
+Ruta 21 : [81, 51, 83]
+Ruta 22 : [91, 52, 100]
+Ruta 23 : [31, 73, 53]
+Ruta 24 : [21, 61, 19, 11]
+Ruta 25 : [8, 94, 96]
+Ruta 26 : [34, 59, 57, 72, 82, 14]
