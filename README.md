@@ -44,9 +44,3 @@ python vrp.py
 # Seguir las instrucciones
 ```
 
-
-## Autores ✒️
-
-* **Christian Sanchez** 
-* **Fernando Valdiviezo** 
-* **Frank Zegarra** 
